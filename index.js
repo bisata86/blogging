@@ -254,7 +254,6 @@ var users = [
 var posts = []
 
 for (let index = 0; index < 100; index++) {
-  const element = array[index];
   posts.push(
     {
       "userId": Math.floor(Math.random() * (10 - 1 + 1) + 1),
