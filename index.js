@@ -851,6 +851,13 @@ var posts = [
     "body": "cupiditate quo est a modi nesciunt soluta\nipsa voluptas error itaque dicta in\nautem qui minus magnam et distinctio eum\naccusamus ratione error aut"
   }
 ]
+
+for (let index = 0; index < posts.length; index++) {
+  const element = posts[index];
+  element.userId = Math.floor(Math.random() * (10 - 1 + 1) + 1)
+  
+}
+
 io.on('connection', (socket) => {
   socket.on('getChart', function(data){
       socket.emit('chart', getChart())
@@ -879,11 +886,12 @@ io.on('connection', (socket) => {
       if(t) {
         data.msg.userId = t.id;
         posts.push(data.msg)
+        t.lastPost = data.msg;
       }    
       io.emit('chart', getChart())
       socket.emit('user',t)
       socket.emit('postSuccess')
-      socket.emit('message',{msg:"Posts published",type:'success'})
+      socket.emit('message',{msg:"Posts published",type:'success',store:'true'})
     }
   });
   socket.on("reloadUser", (data) => {
