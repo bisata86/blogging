@@ -322,7 +322,7 @@ io.on('connection', (socket) => {
     }
   });
 
-  if(!initInerval) {
+  if(false && !initInerval) {
     initInerval = true;
     simulate()
   }
