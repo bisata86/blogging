@@ -271,6 +271,10 @@ for (let index = 0; index < posts.length; index++) {
   
 }
 
+
+
+
+
 io.on('connection', (socket) => {
   socket.on('getChart', function(data){
       socket.emit('chart', getChart())
@@ -295,6 +299,8 @@ io.on('connection', (socket) => {
       else if(!data.msg.bady) msg += "Post body required"
       socket.emit('message',{msg:msg,type:'error'})
     } else {
+
+      
       var t = users.find(user => user.id == data.user.id)
       if(t) {
         data.msg.userId = t.id;
@@ -303,7 +309,8 @@ io.on('connection', (socket) => {
       io.emit('chart', getChart())
       socket.emit('user',t)
       socket.emit('postSuccess')
-      socket.emit('message',{msg:"Posts published",type:'success',store:'true'})
+      socket.broadcast.emit('message',{msg:t.name+" posted something",type:'success',store:'info'})
+      socket.emit('message',{msg:"Posts published succesfully",type:'success',store:'info'})
     }
   });
   socket.on("reloadUser", (data) => {
