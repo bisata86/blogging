@@ -272,8 +272,7 @@ for (let index = 0; index < posts.length; index++) {
   
 }
 
-
-
+var initInerval = false;
 
 
 io.on('connection', (socket) => {
@@ -322,6 +321,28 @@ io.on('connection', (socket) => {
       socket.emit('user',t)
     }
   });
+
+  if(!initInerval) {
+    initInerval = true;
+    simulate()
+  }
+
+  function simulate() {
+      console.log('sd')
+      var data={msg:{}}
+      data.msg.userId = Math.floor(Math.random() * (10 - 1 + 1) + 1);
+      data.msg.date = new Date();
+      data.msg.title ='1'
+      data.msg.body = '2'
+      posts.push(data.msg);
+      io.emit('chart', getChart())
+      socket.broadcast.emit('message',{msg:"Bot posted something",type:'success',store:'info'})
+      setTimeout(function(){
+        simulate()
+      },10000)
+  }
+
+
 });
 
 
